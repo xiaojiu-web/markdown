@@ -106,35 +106,38 @@
   
   + html界面
   
-      ```html
+    
+  
+    ```html
     <form action="http://127.0.0.1:80/postmsg" method="post" enctype="multipart/form-data">
     ```
   
+    
+  
   + js 界面
   
-    
   
-    ```javascript
-  let http = require("http");
-  let querystring=require("querystring");  // 用于解析和格式化 URL 查询字符串的工具
-  let server = http.createServer((res, req) => {
-      if (res.url === "/postmsg" && res.method.toLowerCase() === "post") {
-    //1、变量                           //method.toLowerCase() 转化为小写
-          let Alldata="";
-  //2、接受小段数据
-          res.on("data",(brr)=>{
-              Alldata+=brr;
-          });
-  //3、所有的数据传输完毕
-          res.once("end",()=>{
-              req.end("数据传输完毕");
-              let dataobj=querystring.parse(Alldata);  //将字符串 'foo=bar&abc=xyz&abc=123' 解析为：对象；{foo: 'bar', abc: ['xyz', '123']}  键值对
-              console.log(dataobj);
-          });
-      }
-  });
-    
-    ```
+  
+  ```javascript
+     let http = require("http");
+     let querystring=require("querystring");  // 用于解析和格式化 URL 查询字符串的工具
+     let server = http.createServer((res, req) => {
+       if (res.url === "/postmsg" && res.method.toLowerCase() === "post") {
+     //1、变量                           //method.toLowerCase() 转化为小写
+        let Alldata="";
+     //2、接收小段数据
+        res.on("data",(brr)=>{
+            Alldata+=brr;
+        });
+     //3、所有的数据传输完毕
+        res.once("end",()=>{
+            req.end("数据传输完毕");
+            let dataobj=querystring.parse(Alldata);  //将字符串 'foo=bar&abc=xyz&abc=123'     解析为：对象；{foo: 'bar', abc: ['xyz', '123']}  键值对
+            console.log(dataobj);
+        });
+       }
+       });
+  ```
   
   
   
